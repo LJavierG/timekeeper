@@ -2,6 +2,7 @@ import curses
 import curses.wrapper
 import time
 import os
+from datetime import datetime
 
 class Category:
 	def __init__(self, name, parent=None, init_time=0):
@@ -77,6 +78,7 @@ class TimeSession:
 		self.path = ".time/"
 		self.log_file = "time.log"
 		self.config_file = "keeper.rc"
+		self.pause_description = self.def_pause_description = "<no description>"
 
 	def new_config_here(self):
 		"""
@@ -165,9 +167,9 @@ class TimeSession:
 			return
 
 	def write_log_key(self, key):
-		pass
-		#with open(self.log_file + key, "a") as f:
-		#	f.write(
+		with open(self.log_file + key, "a") as f:
+			cat = self.categories[key]
+			f.write(" : ".join([cat.time(),self.pause_description,datetime.now()])
 
 	def on_event(self, e):
 		"""
